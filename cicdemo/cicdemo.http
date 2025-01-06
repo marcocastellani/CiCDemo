@@ -1,0 +1,6 @@
+@cicdemo_HostAddress = http://localhost:5193
+
+GET {{cicdemo_HostAddress}}/blog/
+Accept: application/json
+
+###
