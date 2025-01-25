@@ -14,6 +14,7 @@ if (app.Environment.IsDevelopment())
 {
     app.MapOpenApi();
 }
+app.UseCors(p=>p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
