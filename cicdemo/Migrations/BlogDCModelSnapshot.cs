@@ -20,24 +20,7 @@ namespace cicdemo.Migrations
 
             NpgsqlModelBuilderExtensions.UseIdentityByDefaultColumns(modelBuilder);
 
-            modelBuilder.Entity("Blog", b =>
-                {
-                    b.Property<int>("BlogId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer");
-
-                    NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("BlogId"));
-
-                    b.Property<string>("Url")
-                        .IsRequired()
-                        .HasColumnType("text");
-
-                    b.HasKey("BlogId");
-
-                    b.ToTable("Blog");
-                });
-
-            modelBuilder.Entity("Post", b =>
+            modelBuilder.Entity("cicdemo.Model.Post", b =>
                 {
                     b.Property<int>("PostId")
                         .ValueGeneratedOnAdd()
@@ -45,12 +28,12 @@ namespace cicdemo.Migrations
 
                     NpgsqlPropertyBuilderExtensions.UseIdentityByDefaultColumn(b.Property<int>("PostId"));
 
-                    b.Property<int>("BlogId")
-                        .HasColumnType("integer");
-
                     b.Property<string>("Content")
                         .IsRequired()
                         .HasColumnType("text");
+
+                    b.Property<int>("Size")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Title")
                         .IsRequired()
@@ -58,25 +41,7 @@ namespace cicdemo.Migrations
 
                     b.HasKey("PostId");
 
-                    b.HasIndex("BlogId");
-
-                    b.ToTable("Post");
-                });
-
-            modelBuilder.Entity("Post", b =>
-                {
-                    b.HasOne("Blog", "Blog")
-                        .WithMany("Posts")
-                        .HasForeignKey("BlogId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Blog");
-                });
-
-            modelBuilder.Entity("Blog", b =>
-                {
-                    b.Navigation("Posts");
+                    b.ToTable("Posts");
                 });
 #pragma warning restore 612, 618
         }

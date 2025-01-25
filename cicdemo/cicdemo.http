@@ -1,6 +1,25 @@
 @cicdemo_HostAddress = http://localhost:5193
 
-GET {{cicdemo_HostAddress}}/blog/
+GET {{cicdemo_HostAddress}}/api/post
 Accept: application/json
 
-###
+### creo post corto
+POST {{cicdemo_HostAddress}}/api/post
+Content-Type: application/json
+
+{
+  "title": "Post strano",
+  "content": "bar dasdasdasdas" 
+}
+
+### creo post lungo
+POST {{cicdemo_HostAddress}}/api/post
+Content-Type: application/json
+
+{
+  "title": "post lungo",
+  "content": "123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 123456789 "
+}
+
+### cancello post
+DELETE {{cicdemo_HostAddress}}/api/post/4
