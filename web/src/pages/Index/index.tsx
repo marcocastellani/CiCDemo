@@ -88,7 +88,7 @@ const Index: React.FC<Props> = () => {
                       {process.env.REACT_APP_TEXT}
                     </p>
                     <p className="font-semibold text-gray-400 text-xs">
-                      13 Dec 2025
+                      12 Dec 2025
                     </p>
                   </div>
                 </div>
