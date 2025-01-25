@@ -16,7 +16,9 @@ test('working with msw', async () => {
   await waitFor(
     () => {
       expect(screen.getByText('Nerdism')).toBeInTheDocument()
-      expect(screen.getByText('Marco Castellani')).toBeInTheDocument()
+      expect(
+        screen.getByText(process.env.REACT_APP_TEXT as string),
+      ).toBeInTheDocument()
     },
     { timeout: 5000 },
   )

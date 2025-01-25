@@ -7,7 +7,7 @@ const Index: React.FC<Props> = () => {
   const [allPosts, setAllPosts] = React.useState([])
   const [post, setPost] = React.useState<any>(null)
   useEffect(() => {
-    fetch('http://localhost:5193/api/post')
+    fetch(`${process.env.API_ADDRESS}/api/post`)
       .then((res) => res.json())
       .then((data) => setAllPosts(data))
   }, [])
@@ -22,6 +22,9 @@ const Index: React.FC<Props> = () => {
       setPost(allPosts[0])
     }
   }, [params, allPosts])
+
+  console.log('REACT_APP_TEXT', process.env)
+
   return (
     <>
       {/* <!-- component --> */}
@@ -82,7 +85,7 @@ const Index: React.FC<Props> = () => {
                   />
                   <div>
                     <p className="font-semibold text-gray-200 text-sm">
-                      Marco Castellani
+                      {process.env.REACT_APP_TEXT}
                     </p>
                     <p className="font-semibold text-gray-400 text-xs">
                       12 Dec 2025
