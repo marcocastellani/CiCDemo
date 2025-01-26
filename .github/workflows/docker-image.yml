@@ -28,6 +28,11 @@ jobs:
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
 
+      - name: "Update database"
+        run: |
+          cd cicdemo
+          dotnet ef database update  --connection ${{ secrets.CONNECTION_STRING }}
+
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"
         with:
