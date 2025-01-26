@@ -24,21 +24,20 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: "9.0.x"
+      - run: |
+          docker build . -f cicdemo/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
+          - name: "Setup .NET Core 9.0.x"
+          uses: actions/setup-dotnet@v4
+          with:
+            dotnet-version: "9.0.x"
 
       - name: "Update database"
         run: |
           cd cicdemo
           dotnet tool install --global dotnet-ef 
-          dotnet build
           dotnet ef database update  --connection "${{ secrets.CONNECTION_STRING }}"
-
-      - run: |
-          docker build . -f cicdemo/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
 
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"
