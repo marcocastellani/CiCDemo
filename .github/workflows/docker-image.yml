@@ -23,16 +23,18 @@ jobs:
           login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
-      - run: |
-          docker build . -f cicdemo/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
 
       - name: "Update database"
         run: |
           cd cicdemo
           dotnet tool install --global dotnet-ef 
+          dotnet build
           dotnet ef database update  --connection "${{ secrets.CONNECTION_STRING }}"
+
+      - run: |
+          docker build . -f cicdemo/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
 
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"
