@@ -53,12 +53,18 @@ jobs:
           dotnet tool install --global dotnet-ef 
           dotnet ef database update  --connection "${{ secrets.CONNECTION_STRING }}"
 
+      - name: Extract branch name
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "branch=-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"
         id: builddeploy
         with:
           resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ github.run_number }}
+          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}
           image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
