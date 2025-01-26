@@ -28,7 +28,7 @@ const Index: React.FC<Props> = () => {
   return (
     <>
       {/* <!-- component --> */}
-      <div className="max-w-screen-xl mx-auto">
+      <div className="max-w-screen-xl mx-auto w-full ">
         {/* <!-- header --> */}
         <header className="flex items-center justify-between py-2 border-b">
           <a
@@ -37,7 +37,7 @@ const Index: React.FC<Props> = () => {
           >
             ALT - Agile Lean Tuscany
           </a>
-          <ul className="inline-flex items-center">
+          <ul className="inline-flex items-center  ">
             {allPosts &&
               allPosts.map((post: any, i) => (
                 <li key={i} className="px-2 md:px-4">
@@ -102,7 +102,7 @@ const Index: React.FC<Props> = () => {
         {/* <!-- main ends here -->
 
     <!-- footer --> */}
-        <footer className="border-t mt-32 pt-12 pb-32 px-4 lg:px-0">
+        <footer className="border-t mt-32 pt-12 pb-32 px-4 lg:px-0 items-center">
           <div className="flex">
             <div className="w-full md:w-1/3 lg:w-1/4">
               <h6 className="font-semibold text-gray-700 mb-4">Company</h6>
