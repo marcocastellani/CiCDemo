@@ -1,7 +1,5 @@
 name: API Build and Deploy
 
-if: false
-
 on:
   push:
     branches:
