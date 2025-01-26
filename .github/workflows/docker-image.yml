@@ -36,14 +36,16 @@ jobs:
           username: ${{ secrets.REGISTRY_USERNAME }}
           password: ${{ secrets.REGISTRY_PASSWORD }}
 
-      - run: |
+      - name: "Build and push image"
+        run: |
           docker build . -f cicdemo/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }} -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
-          - name: "Setup .NET Core 9.0.x"
-          uses: actions/setup-dotnet@v4
-          with:
-            dotnet-version: "9.0.x"
+
+      - name: "Setup .NET Core 9.0.x"
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: "9.0.x"
 
       - name: "Update database"
         run: |
