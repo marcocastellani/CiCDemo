@@ -43,5 +43,5 @@ jobs:
           log-analytics-workspace: cicd-apparound
           log-analytics-workspace-key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
           environment-variables: ASPNETCORE_ENVIRONMENT=Production
-            ConnectionStrings__DefaultConnection=${{ secrets.CONNECTION_STRING }}
+            ConnectionStrings__BlogDC=${{ secrets.CONNECTION_STRING }}
             ASPNETCORE_URLS=http://0.0.0.0:80/
