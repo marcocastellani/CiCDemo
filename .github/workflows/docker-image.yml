@@ -1,6 +1,9 @@
 on: [push]
 name: Linux_Container_Workflow
 
+permissions:
+  contents: read
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
@@ -36,3 +39,5 @@ jobs:
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           name: aci-cicdemoapi
           location: "Sweden Central"
+          environment-variables: ASPNETCORE_ENVIRONMENT=Production
+            ConnectionStrings__DefaultConnection=${{ secrets.CONNECTION_STRING }}
