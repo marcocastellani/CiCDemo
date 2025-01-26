@@ -69,7 +69,7 @@ jobs:
           registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
           registry-username: ${{ secrets.REGISTRY_USERNAME }}
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: aci-cicdemoapi
+          name: aci-cicdemoapi${{ steps.extract_branch.outputs.branch }}
           location: "Sweden Central"
           ports: 80 443 8080
           log-analytics-workspace: cicd-apparound
@@ -85,7 +85,7 @@ jobs:
               issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              body: 'Deployed to Azure Container Instances. The API address is: ${{steps.builddeploy.outputs}}'
+              body: 'Deployed to Azure Container Instances. The API address is: ${{steps.builddeploy.outputs.app-url}}'
             })
 
   close_pull_request_job:

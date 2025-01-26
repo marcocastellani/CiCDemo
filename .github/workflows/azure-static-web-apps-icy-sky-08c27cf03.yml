@@ -40,6 +40,12 @@ jobs:
       - run: pnpm test
         working-directory: ./web
 
+      - name: Extract branch name
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "branch=-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+
       - name: Build And Deploy
         id: builddeploy
         uses: Azure/static-web-apps-deploy@v1
@@ -59,7 +65,7 @@ jobs:
           PRE_BUILD_COMMAND: npm install -g pnpm
           CUSTOM_BUILD_COMMAND: pnpm install && pnpm run build
           NODE_VERSION: 20
-          API_ADDRESS: "http://polloso:5193"
+          API_ADDRESS: ${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
