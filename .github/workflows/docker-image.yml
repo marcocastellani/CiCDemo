@@ -31,6 +31,8 @@ jobs:
       - name: "Update database"
         run: |
           cd cicdemo
+          dotnet tool install --global dotnet-ef
+          dotnet tool restore
           dotnet ef database update  --connection ${{ secrets.CONNECTION_STRING }}
 
       - name: "Deploy to Azure Container Instances"
