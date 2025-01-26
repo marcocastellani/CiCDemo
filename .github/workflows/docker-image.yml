@@ -23,7 +23,7 @@ jobs:
       - run: |
           docker build . -f cicdemo/Dockerfile -t ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
           docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
-          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}latest
+          docker push ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:latest
 
       - name: "Deploy to Azure Container Instances"
         uses: "azure/aci-deploy@v1"
