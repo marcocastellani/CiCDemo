@@ -1,9 +1,17 @@
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BlogDC") ?? throw new InvalidOperationException("Connection string 'BlogDC' not found.");
+var  MyAllowSpecificOrigins = "_myAllowSpecificOrigins";
 
 builder.Services.AddDbContext<BlogDC>(options => options.UseNpgsql(connectionString));
-builder.Services.AddCors(p=>p.AddDefaultPolicy(b=>b.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()));
+builder.Services.AddCors(options =>
+{
+    options.AddPolicy(name: MyAllowSpecificOrigins,
+        policy  =>
+        {
+            policy.AllowAnyOrigin().AllowAnyHeader().AllowAnyMethod();
+        });
+});
 // Add services to the container.
 // Learn more about configuring OpenAPI at https://aka.ms/aspnet/openapi
 builder.Services.AddOpenApi();
@@ -14,10 +22,8 @@ app.UseHttpsRedirection();
 app.UseStaticFiles();
 app.UseRouting();
 
-app.UseCors(p=>p.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader());
-
-app.UseAuthorization();
-
+app.UseCors(MyAllowSpecificOrigins);
+ 
 app.MapControllers();
 
 app.Run();
