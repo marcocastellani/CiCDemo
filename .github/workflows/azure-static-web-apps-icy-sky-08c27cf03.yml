@@ -65,7 +65,7 @@ jobs:
           PRE_BUILD_COMMAND: npm install -g pnpm
           CUSTOM_BUILD_COMMAND: pnpm install && pnpm run build
           NODE_VERSION: 20
-          API_ADDRESS: ${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}
+          API_ADDRESS: http://${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}.swedencentral.azurecontainer.io
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
