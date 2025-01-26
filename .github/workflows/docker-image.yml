@@ -39,7 +39,9 @@ jobs:
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           name: aci-cicdemoapi
           location: "Sweden Central"
-          ports: 80
+          ports: 80 443 8080
+          log-analytics-workspace: cicd-apparound
+          log-analytics-workspace-key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
           environment-variables: ASPNETCORE_ENVIRONMENT=Production
             ConnectionStrings__DefaultConnection=${{ secrets.CONNECTION_STRING }}
-            ASPNETCORE_URLS=http://localhost:80/
+            ASPNETCORE_URLS=http://0.0.0.0:80/
