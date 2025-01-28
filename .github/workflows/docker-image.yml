@@ -4,14 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - cicddemo/** # This workflow will only run when changes are made to the files in the web folder, used for demo purposes
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-    # paths:
-    #   - cicddemo/** # This workflow will only run when changes are made to the files in the web folder, used for demo purposes
 
 permissions:
   contents: read
@@ -117,7 +113,16 @@ jobs:
     runs-on: ubuntu-latest
     name: Close Pull Request Job
     steps:
-      - uses: superbrothers/close-pull-request@v3
+      - name: "Login via Azure CLI"
+        uses: azure/login@v1
         with:
-          # Optional. Post a issue comment just before closing a pull request.
-          comment: "We do not accept PRs. If you have any questions, please feel free to contact us."
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+      - name: Extract branch name
+        if: github.event_name == 'pull_request'
+        shell: bash
+        run: echo "branch=-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+        id: extract_branch
+      - name: "Delete Azure Container Instances"
+        shell: bash
+        run: |
+          az container delete --name aci-cicdemoapi${{ steps.extract_branch.outputs.branch }} --resource-group ${{ secrets.RESOURCE_GROUP }}
