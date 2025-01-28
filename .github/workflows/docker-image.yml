@@ -89,6 +89,7 @@ jobs:
       - name: "Deploy to Azure Container Instances"
         shell: bash
         run: |
+          cat nginx/deploy-aci.yaml
           az container create --resource-group ${{ secrets.RESOURCE_GROUP }} --file nginx/deploy-aci.yaml
 
       - uses: actions/github-script@v7
