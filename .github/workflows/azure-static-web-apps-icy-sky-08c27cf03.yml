@@ -4,14 +4,10 @@ on:
   push:
     branches:
       - main
-    paths:
-      - web/** # This workflow will only run when changes are made to the files in the web folder, used for demo purposes
   pull_request:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
-    # paths:
-    #   - web/** # This workflow will only run when changes are made to the files in the web folder, used for demo purposes
 
 permissions:
   contents: read
