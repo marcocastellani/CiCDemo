@@ -35,7 +35,7 @@ const Index: React.FC<Props> = () => {
             href="#"
             className="px-2 lg:px-0 uppercase font-bold text-purple-800"
           >
-            ALT - Agile Lan Tuscany
+            ALT - Agile Lean Tuscany
           </a>
           <ul className="inline-flex items-center">
             {allPosts &&
