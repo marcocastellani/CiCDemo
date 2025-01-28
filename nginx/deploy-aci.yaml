@@ -51,7 +51,6 @@ properties:
         protocol: TCP
     dnsNameLabel: $RESOURCE_GROUP$BRANCH
     type: Public
-
   diagnostics:
     logAnalytics:
       workspaceId: cicd-apparound
