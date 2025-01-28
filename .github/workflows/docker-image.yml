@@ -73,7 +73,7 @@ jobs:
           registry-password: ${{ secrets.REGISTRY_PASSWORD }}
           name: aci-cicdemoapi${{ steps.extract_branch.outputs.branch }}
           location: "Sweden Central"
-          ports: 80 443
+          ports: 443
           log-analytics-workspace: cicd-apparound
           log-analytics-workspace-key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
           environment-variables: ASPNETCORE_ENVIRONMENT=Production
