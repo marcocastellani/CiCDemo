@@ -19,7 +19,7 @@ properties:
         dnsNameLabel: $RESOURCE_GROUP$BRANCH
     - name: demo-api
       properties:
-        image: $.REGISTRY_LOGIN_SERVER/cicdemoapi:$SHA
+        image: $REGISTRY_LOGIN_SERVER/cicdemoapi:$SHA
         loganalytics:
           workspaceId: cicd-apparound
           workspaceKey: $LOG_ANALYTICS_WORKSPACE_KEY
