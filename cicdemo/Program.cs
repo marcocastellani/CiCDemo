@@ -1,3 +1,4 @@
+using System.Security.Cryptography.X509Certificates;
 using Microsoft.EntityFrameworkCore;
 var builder = WebApplication.CreateBuilder(args);
 var connectionString = builder.Configuration.GetConnectionString("BlogDC") ?? throw new InvalidOperationException("Connection string 'BlogDC' not found.");
@@ -23,6 +24,7 @@ builder.Services.AddControllers();
 
 var app = builder.Build();
 app.UseHttpsRedirection();
+app.UseHsts();
 app.UseStaticFiles();
 app.UseRouting();
 

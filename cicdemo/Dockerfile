@@ -12,7 +12,8 @@ RUN dotnet restore
 COPY cicdemo/. ./cicdemo/  
 COPY CiCDemo.Tests/. ./CiCDemo.Tests/  
 RUN dotnet publish -c release -o /app
-COPY cicdemo/aspnetapp.pfx /app  
+COPY cicdemo/azurecontainer.io.crt /app  
+COPY cicdemo/azurecontainer.io.key /app  
 # --no-restore
 
 # final stage/image
