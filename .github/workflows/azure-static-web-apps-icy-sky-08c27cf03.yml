@@ -10,6 +10,8 @@ on:
     types: [opened, synchronize, reopened, closed]
     branches:
       - main
+    # paths:
+    #   - web/** # This workflow will only run when changes are made to the files in the web folder, used for demo purposes
 
 permissions:
   contents: read
@@ -75,7 +77,7 @@ jobs:
           PRE_BUILD_COMMAND: npm install -g pnpm
           CUSTOM_BUILD_COMMAND: pnpm install && pnpm run build
           NODE_VERSION: 20
-          API_ADDRESS: http://${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}.swedencentral.azurecontainer.io
+          API_ADDRESS: https://${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}.swedencentral.azurecontainer.io
 
   close_pull_request_job:
     if: github.event_name == 'pull_request' && github.event.action == 'closed'
