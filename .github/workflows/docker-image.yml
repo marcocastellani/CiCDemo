@@ -61,27 +61,32 @@ jobs:
         run: echo "branch=-${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
         id: extract_branch
 
+      # - name: "Deploy to Azure Container Instances"
+      #   uses: "azure/aci-deploy@v1"
+      #   id: builddeploy
+      #   with:
+      #     resource-group: ${{ secrets.RESOURCE_GROUP }}
+      #     dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}
+      #     image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
+      #     registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+      #     registry-username: ${{ secrets.REGISTRY_USERNAME }}
+      #     registry-password: ${{ secrets.REGISTRY_PASSWORD }}
+      #     name: aci-cicdemoapi${{ steps.extract_branch.outputs.branch }}
+      #     location: "Sweden Central"
+      #     ports: 443, 80
+      #     log-analytics-workspace: cicd-apparound
+      #     log-analytics-workspace-key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
+      #     environment-variables: ASPNETCORE_ENVIRONMENT=Production
+      #       ConnectionStrings__BlogDC=${{ secrets.CONNECTION_STRING }}
+      #       ASPNETCORE_URLS=https://+:443;http://+:80
+      #       ASPNETCORE_Kestrel__Certificates__Default__Path="/app/azurecontainer.io.crt"
+      #       ASPNETCORE_Kestrel__Certificates__Default__KeyPath="/app/azurecontainer.io.key" #ORRORE
+
       - name: "Deploy to Azure Container Instances"
-        uses: "azure/aci-deploy@v1"
-        id: builddeploy
-        with:
-          resource-group: ${{ secrets.RESOURCE_GROUP }}
-          dns-name-label: ${{ secrets.RESOURCE_GROUP }}${{ steps.extract_branch.outputs.branch }}
-          image: ${{ secrets.REGISTRY_LOGIN_SERVER }}/cicdemoapi:${{ github.sha }}
-          registry-login-server: ${{ secrets.REGISTRY_LOGIN_SERVER }}
-          registry-username: ${{ secrets.REGISTRY_USERNAME }}
-          registry-password: ${{ secrets.REGISTRY_PASSWORD }}
-          name: aci-cicdemoapi${{ steps.extract_branch.outputs.branch }}
-          location: "Sweden Central"
-          ports: 443, 80
-          log-analytics-workspace: cicd-apparound
-          log-analytics-workspace-key: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
-          environment-variables: ASPNETCORE_ENVIRONMENT=Production
-            ConnectionStrings__BlogDC=${{ secrets.CONNECTION_STRING }}
-            ASPNETCORE_URLS=https://+:443;http://+:80
-            ASPNETCORE_Kestrel__Certificates__Default__Path="/app/azurecontainer.io.crt"
-            ASPNETCORE_Kestrel__Certificates__Default__KeyPath="/app/azurecontainer.io.key"
-      #da non fare, gestire HTTPS in ingress o con caddy.
+        shell: bash
+        run: |
+          az container create --resource-group ${{ secrets.RESOURCE_GROUP }} --file nginx/deploy-aci.yaml
+
       - uses: actions/github-script@v7
         with:
           script: |
