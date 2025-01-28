@@ -82,6 +82,10 @@ jobs:
       #       ASPNETCORE_Kestrel__Certificates__Default__Path="/app/azurecontainer.io.crt"
       #       ASPNETCORE_Kestrel__Certificates__Default__KeyPath="/app/azurecontainer.io.key" #ORRORE
 
+      - uses: iamazeem/substitute-action@v1
+        with:
+          input-files: nginx/deploy-aci.yaml
+
       - name: "Deploy to Azure Container Instances"
         shell: bash
         run: |
