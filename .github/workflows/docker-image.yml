@@ -85,6 +85,16 @@ jobs:
       - uses: iamazeem/substitute-action@v1
         with:
           input-files: nginx/deploy-aci.yaml
+        env:
+          REGISTRY_LOGIN_SERVER: ${{ secrets.REGISTRY_LOGIN_SERVER }}
+          BRANCH: ${{ steps.extract_branch.outputs.branch }}
+          RESOURCE_GROUP: ${{ secrets.RESOURCE_GROUP }}
+          CONNECTION_STRING: ${{ secrets.CONNECTION_STRING }}
+          LOG_ANALYTICS_WORKSPACE_KEY: ${{ secrets.LOG_ANALYTICS_WORKSPACE_KEY }}
+          SHA: ${{ github.sha }}
+          REGISTRY_USERNAME: ${{ secrets.REGISTRY_USERNAME }}
+          REGISTRY_PASSWORD: ${{ secrets.REGISTRY_PASSWORD }}
+          NGINX_KEY: ${{ secrets.NGINX_KEY }}
 
       - name: "Deploy to Azure Container Instances"
         shell: bash
