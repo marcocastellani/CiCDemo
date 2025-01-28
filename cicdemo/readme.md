@@ -81,3 +81,5 @@ Select New repository secret to add the following secrets:
 | REGISTRY_USERNAME     | The clientId from the JSON output from the service principal creation                  |
 | REGISTRY_PASSWORD     | The clientSecret from the JSON output from the service principal creation              |
 | RESOURCE_GROUP        | The name of the resource group you used to scope the service principal                 |
+
+Good luck
